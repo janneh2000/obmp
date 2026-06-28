@@ -2,7 +2,7 @@
  * WhatsAppButton — persistent floating contact button (logo only).
  * Update WHATSAPP_NUMBER (international format, digits only) to change the line.
  */
-const WHATSAPP_NUMBER = "23273888880"; // +232 73 888880
+const WHATSAPP_NUMBER = "23232888888"; // +232 73 888880
 
 export default function WhatsAppButton() {
   return (
