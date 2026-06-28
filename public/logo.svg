@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="OBMP — Ocean-Bay Marine and Petroleum Company">
+  <defs>
+    <linearGradient id="obmpDrop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6C544"/>
+      <stop offset="1" stop-color="#E89B12"/>
+    </linearGradient>
+  </defs>
+  <!-- badge -->
+  <circle cx="100" cy="100" r="98" fill="#1C3D72"/>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#F0A81C" stroke-width="1" opacity="0.55"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <!-- oil droplet -->
+  <path d="M52 50 C66 76 74 92 74 108 a22 22 0 1 1 -44 0 c0 -14 9 -28 22 -58 Z" fill="url(#obmpDrop)"/>
+  <ellipse cx="45" cy="96" rx="5.5" ry="9" fill="#ffffff" opacity="0.30"/>
+  <!-- wordmark (textLength keeps it inside the ring in any font) -->
+  <text x="125" y="102" text-anchor="middle" textLength="112" lengthAdjust="spacingAndGlyphs" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-weight="800" font-size="50" fill="#ffffff">OBMP</text>
+  <text x="122" y="126" text-anchor="middle" textLength="118" lengthAdjust="spacingAndGlyphs" font-family="'Barlow Condensed',Arial,sans-serif" font-weight="700" font-size="13" fill="#ffffff">Ocean-Bay Marine and</text>
+  <text x="122" y="142" text-anchor="middle" textLength="110" lengthAdjust="spacingAndGlyphs" font-family="'Barlow Condensed',Arial,sans-serif" font-weight="700" font-size="13" fill="#F0A81C">Petroleum Company</text>
+  <!-- road / wave swoosh -->
+  <path d="M46 166 C 80 151 122 151 160 162" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <path d="M50 175 C 86 160 126 160 164 171" stroke="#F0A81C" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+</svg>

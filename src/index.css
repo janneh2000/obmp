@@ -1,0 +1,143 @@
+/* ==========================================================================
+   OBMP · "KINETIC LEGACY"  —  global stylesheet
+   Fonts: Barlow Condensed (headings) · Inter (body) · Playfair Display (serif)
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------------------
+   Base layer
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-abyssal font-body text-fluid-base text-quartz;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-heading;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: #d49d35;
+    color: #0a192f;
+  }
+
+  /* gold-accented scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a192f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #16314f;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b7822a;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Components layer — Kinetic Legacy primitives
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* 12-column-friendly container with extended 120px desktop gutters */
+  .container-kinetic {
+    width: 100%;
+    max-width: 1536px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .container-kinetic {
+      padding-inline: 2.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-kinetic {
+      padding-inline: 120px;
+    }
+  }
+
+  /* explicit 12-column grid helper */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  /* eyebrow / section kicker */
+  .eyebrow {
+    @apply font-heading text-sm uppercase tracking-horizon text-gold;
+  }
+
+  /* primary gold button */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-gold px-6 py-3 font-heading text-sm font-semibold uppercase tracking-kinetic text-abyssal transition-all duration-300 ease-kinetic;
+  }
+  .btn-gold:hover {
+    @apply -translate-y-0.5 brightness-110 shadow-gold;
+  }
+
+  /* ghost / outline button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-quartz/25 px-6 py-3 font-heading text-sm font-semibold uppercase tracking-kinetic text-quartz transition-all duration-300 ease-kinetic;
+  }
+  .btn-ghost:hover {
+    @apply border-gold text-gold;
+  }
+
+  /* nav link with animated gold underline */
+  .nav-link {
+    @apply relative font-heading text-base font-semibold uppercase tracking-[0.12em] text-quartz transition-colors duration-300;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all duration-300 ease-kinetic;
+  }
+  .nav-link:hover {
+    @apply text-gold;
+  }
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Services pillars — desktop hover expansion (Module 04).
+     Equal thirds by default; the hovered pillar grows to 50% (flex-grow 2)
+     while the siblings settle to 25% each. */
+  .service-pillar {
+    transition: all 0.7s ease-in-out;
+  }
+  @media (min-width: 1024px) {
+    .service-pillar {
+      flex: 1 1 0%;
+    }
+    .service-pillar:hover {
+      flex-grow: 2;
+    }
+  }
+}
