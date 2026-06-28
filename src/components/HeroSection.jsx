@@ -59,7 +59,7 @@ export default function HeroSection() {
           />
           <h1 className="relative z-10 flex flex-col uppercase leading-[0.92]">
             <span className="font-barlow text-fluid-3xl font-extrabold tracking-tight text-quartz">Powering</span>
-            <span className="font-barlow text-fluid-3xl font-extrabold tracking-tight text-gold"><Sub-Sahara></Sub-Sahara> Africa&rsquo;s</span>
+            <span className="font-barlow text-fluid-3xl font-extrabold tracking-tight text-gold">Sub-Sahara Africa&rsquo;s</span>
             <span className="font-serif text-fluid-3xl font-medium italic text-quartz">Energy Future</span>
           </h1>
         </div>
