@@ -82,7 +82,7 @@ export default function ContactSection() {
             <div className="relative flex items-start justify-between gap-6">
               <div>
                 <p className="font-heading text-xs uppercase tracking-horizon text-quartz/45">Operating across</p>
-                <p className="font-barlow text-fluid-xl font-bold uppercase leading-none text-quartz">West Africa</p>
+                <p className="font-barlow text-fluid-xl font-bold uppercase leading-none text-quartz">Sub-Sahara Africa</p>
               </div>
               <div className="relative h-28 w-28 shrink-0 lg:h-36 lg:w-36" aria-hidden="true">
                 <span className="absolute inset-0 rounded-full border border-gold/15" />
