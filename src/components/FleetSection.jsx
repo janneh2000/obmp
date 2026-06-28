@@ -55,7 +55,7 @@ export default function FleetSection() {
         </h2>
         <p className="mt-5 max-w-2xl text-fluid-base text-quartz/75">
           OBMP&rsquo;s marine division operates a modern, double-hull tanker fleet — moving clean
-          petroleum products safely across West African waters and beyond.
+          petroleum products safely across Sub-Sahara African waters and beyond.
         </p>
 
         <div className="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-2">

@@ -24,7 +24,7 @@ export default function Footer() {
           </div>
           <p className="mt-5 max-w-sm text-fluid-sm text-quartz/55">
             An integrated energy platform for the sustainable exploration, distribution, and
-            supply of premium petroleum products across West Africa.
+            supply of premium petroleum products across Sub-SaharaAfrica.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function Footer() {
             © {YEAR} Ocean-Bay Marine &amp; Petroleum Company. All rights reserved.
           </p>
           <p className="font-heading text-sm uppercase tracking-[0.25em] text-quartz/40">
-            Sierra Leone · West Africa
+            Sierra Leone · Sub-Sahara Africa
           </p>
         </div>
       </div>

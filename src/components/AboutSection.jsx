@@ -22,20 +22,20 @@ export default function AboutSection() {
         <div>
           <p className="eyebrow mb-4">Our Story</p>
           <h2 className="font-heading text-fluid-2xl font-bold uppercase leading-[0.95] text-quartz">
-            Built on the shores of West Africa
+            Built on the shores of Sub-Sahara Africa
           </h2>
           <div className="mt-6 space-y-5 text-fluid-base text-quartz/75">
             <p>
               Ocean-Bay Marine &amp; Petroleum Company (OBMP) was founded with a singular vision: to
-              build an indigenous West African petroleum company capable of competing on the world
+              build an indigenous Sub-Sahara African petroleum company capable of competing on the world
               stage while serving the communities at home. Headquartered in Freetown, Sierra Leone
               🇸🇱, OBMP has grown from a focused trading house into a fully-integrated petroleum
-              enterprise with plans to serve West Africa as a whole.
+              enterprise with plans to serve Sub-Sahara Africa as a whole.
             </p>
             <p>
               Over the years, we have forged partnerships with international energy majors, national
               oil companies, and regional governments to deliver fuel, drive exploration, and build
-              energy security across eight West African nations.
+              energy security across eight Sub-Sahara African nations.
             </p>
             <p>
               Today, OBMP stands as a symbol of African energy ambition — operationally excellent,
@@ -66,7 +66,7 @@ export default function AboutSection() {
           <h3 className="mt-6 font-heading text-fluid-lg font-bold uppercase text-gold">Our Mission</h3>
           <p className="mt-3 text-fluid-base text-quartz/75">
             To deliver safe, reliable, and competitively priced petroleum products and services that
-            power West Africa&rsquo;s economies — while creating lasting value for our shareholders,
+            power Sub-Sahara Africa&rsquo;s economies — while creating lasting value for our shareholders,
             employees, and the communities we serve.
           </p>
         </article>
@@ -76,7 +76,7 @@ export default function AboutSection() {
           </span>
           <h3 className="mt-6 font-heading text-fluid-lg font-bold uppercase text-gold">Our Vision</h3>
           <p className="mt-3 text-fluid-base text-quartz/75">
-            To be the most trusted and capable indigenous petroleum company in West Africa —
+            To be the most trusted and capable indigenous petroleum company in Sub-Sahara Africa —
             recognized globally for operational excellence, ethical conduct, and our transformative
             impact on African energy security.
           </p>

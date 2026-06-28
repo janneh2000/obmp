@@ -26,7 +26,7 @@ const SERVICES = [
     eyebrow: "Upstream Operations Excellence",
     title: "Exploration & Production",
     description:
-      "Our E&P division leverages advanced seismic data analysis, modern drilling technologies, and seasoned geological expertise to identify and develop hydrocarbon resources across West African basins. We operate with world-class HSE standards and strong government partnerships.",
+      "Our E&P division leverages advanced seismic data analysis, modern drilling technologies, and seasoned geological expertise to identify and develop hydrocarbon resources across Sub-Sahara African basins. We operate with world-class HSE standards and strong government partnerships.",
     capabilities: [
       "Geophysical surveying and seismic interpretation",
       "Exploration drilling and well management",
@@ -42,7 +42,7 @@ const SERVICES = [
     eyebrow: "Global Commodity Intelligence",
     title: "Trading & Procurement",
     description:
-      "OBMP's trading division executes sophisticated petroleum commodity transactions connecting West African buyers and sellers to international markets. Our experienced trading desk provides price risk management, supply optimization, and procurement strategies that maximize value.",
+      "OBMP's trading division executes sophisticated petroleum commodity transactions connecting Sub-Sahara African buyers and sellers to international markets. Our experienced trading desk provides price risk management, supply optimization, and procurement strategies that maximize value.",
     capabilities: [
       "Crude oil and refined products trading",
       "International supply chain procurement",

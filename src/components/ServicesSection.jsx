@@ -49,7 +49,7 @@ export default function ServicesSection() {
           Three pillars. One integrated platform.
         </h2>
         <p className="mt-5 max-w-xl text-quartz/65">
-          From the wellhead to the forecourt — Ocean-Bay moves energy across West Africa with
+          From the wellhead to the forecourt — Ocean-Bay moves energy across Sub-Sahara Africa with
           precision, scale, and intelligence.
         </p>
 

@@ -2,7 +2,7 @@ import ContactForm from "./ContactForm";
 
 /**
  * ContactSection — split-screen "Partnership Nexus" (content pass).
- * Left: stylized West Africa graphic + OBP contact details (gold icons).
+ * Left: stylized Sub-Sahara Africa graphic + OBP contact details (gold icons).
  * Right: the Nexus contact form. Drop /public/contact/map.jpg for a real map.
  */
 
@@ -31,7 +31,7 @@ const ClockIcon = () => (
 );
 
 const CONTACT_DETAILS = [
-  { icon: <PinIcon />, label: "Head Office", lines: ["Freetown, Sierra Leone 🇸🇱", "West Africa"] },
+  { icon: <PinIcon />, label: "Head Office", lines: ["Freetown, Sierra Leone 🇸🇱", "Sub-Sahara Africa"] },
   { icon: <PhoneIcon />, label: "Phone / WhatsApp", lines: ["+23232888888"] },
   { icon: <MailIcon />, label: "Email", lines: ["info@oceanbaypetroleum.com", "sales@oceanbaypetroleum.com"] },
   { icon: <ClockIcon />, label: "Business Hours", lines: ["Monday – Friday: 8AM – 6PM", "Saturday: 9AM – 2PM"] },
