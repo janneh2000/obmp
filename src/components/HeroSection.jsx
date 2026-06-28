@@ -47,7 +47,7 @@ export default function HeroSection() {
         className="container-kinetic relative z-10 w-full pb-28 pt-36 will-change-transform lg:pb-32 lg:pt-44"
       >
         <p className="mb-6 font-heading text-sm font-semibold uppercase tracking-horizon text-gold duration-700 animate-in fade-in slide-in-from-bottom-3 lg:text-base">
-          Integrated Energy · West Africa
+          Integrated Energy · Sub-Sahara Africa
         </p>
 
         {/* Signature Split headline */}
@@ -67,7 +67,7 @@ export default function HeroSection() {
         {/* supporting copy — larger + higher contrast for readability */}
         <p className="mt-8 max-w-2xl text-fluid-lg font-medium leading-relaxed text-quartz/90">
           An integrated platform for the sustainable exploration, distribution, and supply of
-          premium petroleum products across West Africa.
+          premium petroleum products across Sub-Sahara Africa.
         </p>
 
         {/* CTAs */}
