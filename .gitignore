@@ -4,6 +4,7 @@ dist-ssr
 .DS_Store
 *.local
 .vite
+.sanity
 vite.config.js.timestamp-*
 vite.config.*.timestamp-*
 .env

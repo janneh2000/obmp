@@ -1,28 +1,29 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchVessels, urlFor } from "../lib/sanity";
 
 /**
  * FleetSection — OBMP's marine tanker fleet.
- * Specs are taken from the vessels' INTERTANKO Q88 questionnaires.
- * Photos: drop /public/fleet/alma-marine.jpg and /public/fleet/crazy.jpg
- * (a ship-silhouette fallback renders until then).
+ * Pulls vessels from Sanity (type "vessel"); until Sanity is configured or has
+ * content, it falls back to FALLBACK_FLEET below so the live site never breaks.
+ * Photos managed in Sanity, or at /public/fleet/*.jpg for the fallback.
  */
-const FLEET = [
+const FALLBACK_FLEET = [
   {
     name: "MT Alma Marine",
     type: "Oil / Chemical Tanker",
     flagLine: "Barbados flag · IMO 9438250",
     image: "/fleet/alma-marine.jpg",
-    summary:
-      "Our double-hull product and chemical tanker for regional clean-product and chemical cargoes.",
+    summary: "Our double-hull product and chemical tanker for regional clean-product and chemical cargoes.",
     specs: [
-      ["Deadweight", "9,016 MT"],
-      ["Built", "2010"],
-      ["Length (LOA)", "117.6 m"],
-      ["Beam", "18.99 m"],
-      ["Gross tonnage", "6,190 GT"],
-      ["Cargo grades", "5"],
-      ["Hull", "Double hull"],
-      ["Flag", "Barbados"],
+      { label: "Deadweight", value: "9,016 MT" },
+      { label: "Built", value: "2010" },
+      { label: "Length (LOA)", value: "117.6 m" },
+      { label: "Beam", value: "18.99 m" },
+      { label: "Gross tonnage", value: "6,190 GT" },
+      { label: "Cargo grades", value: "5" },
+      { label: "Hull", value: "Double hull" },
+      { label: "Flag", value: "Barbados" },
     ],
   },
   {
@@ -30,17 +31,16 @@ const FLEET = [
     type: "Oil Products Tanker",
     flagLine: "Togo flag · IMO 1063322",
     image: "/fleet/crazy.jpg",
-    summary:
-      "A nimble double-hull tanker built for coastal and short-sea distribution across West Africa.",
+    summary: "A nimble double-hull tanker built for coastal and short-sea distribution across West Africa.",
     specs: [
-      ["Deadweight", "3,600 MT"],
-      ["Built", "2007"],
-      ["Length (LOA)", "88.1 m"],
-      ["Beam", "13.5 m"],
-      ["Gross tonnage", "2,282 GT"],
-      ["Net tonnage", "1,278 NT"],
-      ["Hull", "Double hull"],
-      ["Flag", "Togo"],
+      { label: "Deadweight", value: "3,600 MT" },
+      { label: "Built", value: "2007" },
+      { label: "Length (LOA)", value: "88.1 m" },
+      { label: "Beam", value: "13.5 m" },
+      { label: "Gross tonnage", value: "2,282 GT" },
+      { label: "Net tonnage", value: "1,278 NT" },
+      { label: "Hull", value: "Double hull" },
+      { label: "Flag", value: "Togo" },
     ],
   },
   {
@@ -48,22 +48,43 @@ const FLEET = [
     type: "Oil Tanker",
     flagLine: "Double-hull product tanker · 4,141 MT",
     image: "/fleet/obmp-tanker.jpg",
-    summary:
-      "A double-hull product tanker for coastal and short-sea distribution across Sub-Sahara Africa.",
+    summary: "A double-hull product tanker for coastal and short-sea distribution across Sub-Sahara Africa.",
     specs: [
-      ["Deadweight", "4,141 MT"],
-      ["Built", "2006"],
-      ["Length (LOA)", "96.0 m"],
-      ["Beam", "13.98 m"],
-      ["Gross tonnage", "2,724 GT"],
-      ["Net tonnage", "1,525 NT"],
-      ["Cargo tanks", "10"],
-      ["Hull", "Double hull"],
+      { label: "Deadweight", value: "4,141 MT" },
+      { label: "Built", value: "2006" },
+      { label: "Length (LOA)", value: "96.0 m" },
+      { label: "Beam", value: "13.98 m" },
+      { label: "Gross tonnage", value: "2,724 GT" },
+      { label: "Net tonnage", value: "1,525 NT" },
+      { label: "Cargo tanks", value: "10" },
+      { label: "Hull", value: "Double hull" },
     ],
   },
 ];
 
 export default function FleetSection() {
+  const [fleet, setFleet] = useState(FALLBACK_FLEET);
+
+  useEffect(() => {
+    let active = true;
+    fetchVessels().then((data) => {
+      if (!active || !data || !data.length) return;
+      setFleet(
+        data.map((v) => ({
+          name: v.name,
+          type: v.type,
+          flagLine: v.flagLine,
+          summary: v.summary,
+          specs: v.specs || [],
+          image: v.image ? urlFor(v.image)?.width(1200).height(750).fit("crop").url() || "" : "",
+        }))
+      );
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section id="fleet" className="relative bg-abyssal-deep pb-24 pt-28 lg:pb-32 lg:pt-36">
       <div className="container-kinetic">
@@ -77,32 +98,39 @@ export default function FleetSection() {
         </p>
 
         <div className="mt-12 flex flex-wrap justify-center gap-8 lg:mt-16">
-          {FLEET.map((v) => (
-            <article key={v.name} className="w-full max-w-xl overflow-hidden rounded-sm border border-quartz/10 bg-abyssal-800 lg:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)]">
+          {fleet.map((v) => (
+            <article
+              key={v.name}
+              className="w-full max-w-xl overflow-hidden rounded-sm border border-quartz/10 bg-abyssal-800 lg:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)]"
+            >
               {/* image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-abyssal-700">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <ShipIcon className="h-24 w-24 text-quartz/10" />
                 </div>
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${v.image})` }} />
+                {v.image && (
+                  <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${v.image})` }} />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-abyssal via-abyssal/20 to-transparent" />
-                <span className="absolute left-4 top-4 rounded-sm bg-gold px-3 py-1 font-heading text-xs font-semibold uppercase tracking-kinetic text-abyssal">
-                  {v.type}
-                </span>
+                {v.type && (
+                  <span className="absolute left-4 top-4 rounded-sm bg-gold px-3 py-1 font-heading text-xs font-semibold uppercase tracking-kinetic text-abyssal">
+                    {v.type}
+                  </span>
+                )}
                 <div className="absolute inset-x-5 bottom-4">
                   <h3 className="font-barlow text-3xl font-bold uppercase leading-none text-quartz">{v.name}</h3>
-                  <p className="mt-1 text-fluid-sm text-quartz/70">{v.flagLine}</p>
+                  {v.flagLine && <p className="mt-1 text-fluid-sm text-quartz/70">{v.flagLine}</p>}
                 </div>
               </div>
 
               {/* details */}
               <div className="p-6 lg:p-7">
-                <p className="text-fluid-sm text-quartz/70">{v.summary}</p>
+                {v.summary && <p className="text-fluid-sm text-quartz/70">{v.summary}</p>}
                 <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4">
-                  {v.specs.map(([label, value]) => (
-                    <div key={label}>
-                      <dt className="font-heading text-[0.7rem] uppercase tracking-kinetic text-quartz/45">{label}</dt>
-                      <dd className="mt-0.5 font-medium text-quartz">{value}</dd>
+                  {v.specs.map((s) => (
+                    <div key={s.label}>
+                      <dt className="font-heading text-[0.7rem] uppercase tracking-kinetic text-quartz/45">{s.label}</dt>
+                      <dd className="mt-0.5 font-medium text-quartz">{s.value}</dd>
                     </div>
                   ))}
                 </dl>
