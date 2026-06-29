@@ -43,6 +43,24 @@ const FLEET = [
       ["Flag", "Togo"],
     ],
   },
+  {
+    name: "MT Ocean Bay",
+    type: "Oil Tanker",
+    flagLine: "Double-hull product tanker · 4,141 MT",
+    image: "/fleet/obmp-tanker.jpg",
+    summary:
+      "A double-hull product tanker for coastal and short-sea distribution across Sub-Sahara Africa.",
+    specs: [
+      ["Deadweight", "4,141 MT"],
+      ["Built", "2006"],
+      ["Length (LOA)", "96.0 m"],
+      ["Beam", "13.98 m"],
+      ["Gross tonnage", "2,724 GT"],
+      ["Net tonnage", "1,525 NT"],
+      ["Cargo tanks", "10"],
+      ["Hull", "Double hull"],
+    ],
+  },
 ];
 
 export default function FleetSection() {
@@ -58,9 +76,9 @@ export default function FleetSection() {
           petroleum products safely across Sub-Sahara African waters and beyond.
         </p>
 
-        <div className="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-2">
+        <div className="mt-12 flex flex-wrap justify-center gap-8 lg:mt-16">
           {FLEET.map((v) => (
-            <article key={v.name} className="overflow-hidden rounded-sm border border-quartz/10 bg-abyssal-800">
+            <article key={v.name} className="w-full max-w-xl overflow-hidden rounded-sm border border-quartz/10 bg-abyssal-800 lg:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.34rem)]">
               {/* image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-abyssal-700">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -80,7 +98,7 @@ export default function FleetSection() {
               {/* details */}
               <div className="p-6 lg:p-7">
                 <p className="text-fluid-sm text-quartz/70">{v.summary}</p>
-                <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+                <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4">
                   {v.specs.map(([label, value]) => (
                     <div key={label}>
                       <dt className="font-heading text-[0.7rem] uppercase tracking-kinetic text-quartz/45">{label}</dt>
