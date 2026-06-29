@@ -1,58 +1,88 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchAbout, fetchValues, urlFor } from "../lib/sanity";
 
 /**
- * AboutSection — Our Story, Mission & Vision, Core Values (content pass).
- * Story images: drop /public/about/story-1.jpg … story-4.jpg.
+ * AboutSection — Our Story, Mission & Vision, Core Values.
+ * Pulls from Sanity (aboutPage + value docs); falls back to the content below.
  */
+const FALLBACK_STORY = {
+  title: "Built on the shores of West Africa",
+  paragraphs: [
+    "Ocean-Bay Marine & Petroleum Company (OBMP) was founded with a singular vision: to build an indigenous West African petroleum company capable of competing on the world stage while serving the communities at home. Headquartered in Freetown, Sierra Leone 🇸🇱, OBMP has grown from a focused trading house into a fully-integrated petroleum enterprise with plans to serve West Africa as a whole.",
+    "Over the years, we have forged partnerships with international energy majors, national oil companies, and regional governments to deliver fuel, drive exploration, and build energy security across eight West African nations.",
+    "Today, OBMP stands as a symbol of African energy ambition — operationally excellent, financially disciplined, and deeply committed to the continent's development.",
+  ],
+  images: ["/about/story-1.jpg", "/about/story-2.jpg", "/about/story-3.jpg", "/about/story-4.jpg"],
+};
 
-const STORY_IMAGES = ["/about/story-1.jpg", "/about/story-2.jpg", "/about/story-3.jpg", "/about/story-4.jpg"];
+const FALLBACK_MISSION =
+  "To deliver safe, reliable, and competitively priced petroleum products and services that power West Africa's economies — while creating lasting value for our shareholders, employees, and the communities we serve.";
+const FALLBACK_VISION =
+  "To be the most trusted and capable indigenous petroleum company in West Africa — recognized globally for operational excellence, ethical conduct, and our transformative impact on African energy security.";
 
-const VALUES = [
-  { icon: <ShieldIcon />, title: "Integrity", text: "We operate with transparency and honesty in every engagement — with clients, partners, and communities." },
-  { icon: <AwardIcon />, title: "Excellence", text: "World-class standards in operations, safety, and service delivery across the entire value chain." },
-  { icon: <UsersIcon />, title: "Community", text: "We invest in the people and places where we operate, driving sustainable socioeconomic development." },
-  { icon: <BulbIcon />, title: "Innovation", text: "Embracing technology and modern practices to deliver smarter, safer energy solutions." },
+const FALLBACK_VALUES = [
+  { title: "Integrity", text: "We operate with transparency and honesty in every engagement — with clients, partners, and communities." },
+  { title: "Excellence", text: "World-class standards in operations, safety, and service delivery across the entire value chain." },
+  { title: "Community", text: "We invest in the people and places where we operate, driving sustainable socioeconomic development." },
+  { title: "Innovation", text: "Embracing technology and modern practices to deliver smarter, safer energy solutions." },
 ];
 
+const VALUE_ICONS = [ShieldIcon, AwardIcon, UsersIcon, BulbIcon];
+
 export default function AboutSection() {
+  const [story, setStory] = useState(FALLBACK_STORY);
+  const [mission, setMission] = useState(FALLBACK_MISSION);
+  const [vision, setVision] = useState(FALLBACK_VISION);
+  const [values, setValues] = useState(FALLBACK_VALUES);
+
+  useEffect(() => {
+    let active = true;
+    fetchAbout().then((data) => {
+      if (!active || !data) return;
+      setStory({
+        title: data.storyTitle || FALLBACK_STORY.title,
+        paragraphs: data.storyParagraphs?.length ? data.storyParagraphs : FALLBACK_STORY.paragraphs,
+        images: data.storyImages?.length
+          ? data.storyImages.map((img) => urlFor(img)?.width(800).height(1000).fit("crop").url() || "")
+          : FALLBACK_STORY.images,
+      });
+      if (data.mission) setMission(data.mission);
+      if (data.vision) setVision(data.vision);
+    });
+    fetchValues().then((data) => {
+      if (active && data && data.length) setValues(data);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const [img0, img1, img2, img3] = story.images;
+
   return (
     <section id="about" className="relative bg-abyssal pb-24 pt-28 lg:pb-32 lg:pt-36">
       {/* -------- Our Story -------- */}
       <div className="container-kinetic grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <p className="eyebrow mb-4">Our Story</p>
-          <h2 className="font-heading text-fluid-2xl font-bold uppercase leading-[0.95] text-quartz">
-            Built on the shores of Sub-Sahara Africa
-          </h2>
+          <h2 className="font-heading text-fluid-2xl font-bold uppercase leading-[0.95] text-quartz">{story.title}</h2>
           <div className="mt-6 space-y-5 text-fluid-base text-quartz/75">
-            <p>
-              Ocean-Bay Marine &amp; Petroleum Company (OBMP) was founded with a singular vision: to
-              build an indigenous Sub-Sahara African petroleum company capable of competing on the world
-              stage while serving the communities at home. Headquartered in Freetown, Sierra Leone
-              🇸🇱, OBMP has grown from a focused trading house into a fully-integrated petroleum
-              enterprise with plans to serve Sub-Sahara Africa as a whole.
-            </p>
-            <p>
-              Over the years, we have forged partnerships with international energy majors, national
-              oil companies, and regional governments to deliver fuel, drive exploration, and build
-              energy security across eight Sub-Sahara African nations.
-            </p>
-            <p>
-              Today, OBMP stands as a symbol of African energy ambition — operationally excellent,
-              financially disciplined, and deeply committed to the continent&rsquo;s development.
-            </p>
+            {story.paragraphs.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
         </div>
 
         {/* image grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-4">
-            <ImgCard src={STORY_IMAGES[0]} />
-            <ImgCard src={STORY_IMAGES[2]} />
+            {img0 && <ImgCard src={img0} />}
+            {img2 && <ImgCard src={img2} />}
           </div>
           <div className="space-y-4 lg:translate-y-10">
-            <ImgCard src={STORY_IMAGES[1]} />
-            <ImgCard src={STORY_IMAGES[3]} />
+            {img1 && <ImgCard src={img1} />}
+            {img3 && <ImgCard src={img3} />}
           </div>
         </div>
       </div>
@@ -64,22 +94,14 @@ export default function AboutSection() {
             <TargetIcon />
           </span>
           <h3 className="mt-6 font-heading text-fluid-lg font-bold uppercase text-gold">Our Mission</h3>
-          <p className="mt-3 text-fluid-base text-quartz/75">
-            To deliver safe, reliable, and competitively priced petroleum products and services that
-            power Sub-Sahara Africa&rsquo;s economies — while creating lasting value for our shareholders,
-            employees, and the communities we serve.
-          </p>
+          <p className="mt-3 text-fluid-base text-quartz/75">{mission}</p>
         </article>
         <article className="rounded-sm border border-quartz/10 bg-abyssal-800 p-8 lg:p-10">
           <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 text-gold">
             <CompassIcon />
           </span>
           <h3 className="mt-6 font-heading text-fluid-lg font-bold uppercase text-gold">Our Vision</h3>
-          <p className="mt-3 text-fluid-base text-quartz/75">
-            To be the most trusted and capable indigenous petroleum company in Sub-Sahara Africa —
-            recognized globally for operational excellence, ethical conduct, and our transformative
-            impact on African energy security.
-          </p>
+          <p className="mt-3 text-fluid-base text-quartz/75">{vision}</p>
         </article>
       </div>
 
@@ -90,15 +112,18 @@ export default function AboutSection() {
           <h2 className="font-heading text-fluid-2xl font-bold uppercase text-quartz">What drives us</h2>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {VALUES.map((v) => (
-            <article key={v.title} className="rounded-sm border border-quartz/10 bg-abyssal-800/60 p-7 transition-colors duration-300 hover:border-gold/40">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 text-gold">
-                {v.icon}
-              </span>
-              <h3 className="mt-5 font-heading text-xl font-bold uppercase text-quartz">{v.title}</h3>
-              <p className="mt-2 text-fluid-sm text-quartz/65">{v.text}</p>
-            </article>
-          ))}
+          {values.map((v, i) => {
+            const Icon = VALUE_ICONS[i % VALUE_ICONS.length];
+            return (
+              <article key={v.title} className="rounded-sm border border-quartz/10 bg-abyssal-800/60 p-7 transition-colors duration-300 hover:border-gold/40">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 text-gold">
+                  <Icon />
+                </span>
+                <h3 className="mt-5 font-heading text-xl font-bold uppercase text-quartz">{v.title}</h3>
+                <p className="mt-2 text-fluid-sm text-quartz/65">{v.text}</p>
+              </article>
+            );
+          })}
         </div>
 
         <div className="mt-14 text-center">

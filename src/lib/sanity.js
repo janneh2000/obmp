@@ -63,6 +63,16 @@ export function fetchValues() {
   return safeFetch(`*[_type == "value"] | order(order asc, _createdAt asc){ title, text }`);
 }
 
+// Site settings is one shared document — memoize so Hero/Contact/WhatsApp
+// trigger a single network request per page load.
+let _siteSettings;
 export function fetchSiteSettings() {
-  return safeFetch(`*[_type == "siteSettings"][0]`);
+  if (!_siteSettings) _siteSettings = safeFetch(`*[_type == "siteSettings"][0]`);
+  return _siteSettings;
+}
+
+export function fetchAbout() {
+  return safeFetch(
+    `*[_type == "aboutPage"][0]{ storyTitle, storyParagraphs, mission, vision, storyImages }`
+  );
 }

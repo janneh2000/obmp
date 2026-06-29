@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import ContactForm from "./ContactForm";
+import { fetchSiteSettings } from "../lib/sanity";
 
 /**
- * ContactSection — split-screen "Partnership Nexus" (content pass).
- * Left: stylized Sub-Sahara Africa graphic + OBP contact details (gold icons).
- * Right: the Nexus contact form. Drop /public/contact/map.jpg for a real map.
+ * ContactSection — split-screen "Partnership Nexus".
+ * Contact details come from Sanity (siteSettings); falls back to the values
+ * below. Left: stylized Sub-Sahara Africa graphic + details (gold icons).
  */
 
 const PinIcon = () => (
@@ -30,12 +32,12 @@ const ClockIcon = () => (
   </svg>
 );
 
-const CONTACT_DETAILS = [
-  { icon: <PinIcon />, label: "Head Office", lines: ["Freetown, Sierra Leone 🇸🇱", "Sub-Sahara Africa"] },
-  { icon: <PhoneIcon />, label: "Phone / WhatsApp", lines: ["+23232888888"] },
-  { icon: <MailIcon />, label: "Email", lines: ["info@oceanbaypetroleum.com", "sales@oceanbaypetroleum.com"] },
-  { icon: <ClockIcon />, label: "Business Hours", lines: ["Monday – Friday: 8AM – 6PM", "Saturday: 9AM – 2PM"] },
-];
+const FALLBACK = {
+  headOffice: ["Freetown, Sierra Leone 🇸🇱", "Sub-Sahara Africa"],
+  phone: ["+23232888888"],
+  emails: ["info@oceanbaypetroleum.com", "sales@oceanbaypetroleum.com"],
+  hours: ["Monday – Friday: 8AM – 6PM", "Saturday: 9AM – 2PM"],
+};
 
 function renderLine(line) {
   if (line.includes("@")) {
@@ -56,6 +58,25 @@ function renderLine(line) {
 }
 
 export default function ContactSection() {
+  const [s, setS] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    fetchSiteSettings().then((data) => {
+      if (active && data) setS(data);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const details = [
+    { icon: <PinIcon />, label: "Head Office", lines: s?.headOffice?.length ? s.headOffice : FALLBACK.headOffice },
+    { icon: <PhoneIcon />, label: "Phone / WhatsApp", lines: s?.phone ? [s.phone] : FALLBACK.phone },
+    { icon: <MailIcon />, label: "Email", lines: s?.emails?.length ? s.emails : FALLBACK.emails },
+    { icon: <ClockIcon />, label: "Business Hours", lines: s?.hours?.length ? s.hours : FALLBACK.hours },
+  ];
+
   return (
     <section id="contact" className="relative bg-abyssal-deep pb-24 pt-28 lg:pb-32 lg:pt-36">
       <div className="container-kinetic">
@@ -96,7 +117,7 @@ export default function ContactSection() {
             </div>
 
             <ul className="relative mt-10 space-y-5">
-              {CONTACT_DETAILS.map((d) => (
+              {details.map((d) => (
                 <li key={d.label} className="flex items-start gap-4">
                   <span className="mt-0.5 text-gold">{d.icon}</span>
                   <span>

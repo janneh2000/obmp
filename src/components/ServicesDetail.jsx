@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchServices, urlFor } from "../lib/sanity";
 
 /**
- * ServicesDetail — detailed, alternating capability rows.
- * Images: drop /public/services/{distribution,exploration,trading}.jpg.
+ * ServicesDetail — detailed alternating capability rows.
+ * Pulls from Sanity (type "service"); falls back to FALLBACK_SERVICES.
  */
-const SERVICES = [
+const FALLBACK_SERVICES = [
   {
     n: "01",
     eyebrow: "End-to-End Logistics",
@@ -26,7 +28,7 @@ const SERVICES = [
     eyebrow: "Upstream Operations Excellence",
     title: "Exploration & Production",
     description:
-      "Our E&P division leverages advanced seismic data analysis, modern drilling technologies, and seasoned geological expertise to identify and develop hydrocarbon resources across Sub-Sahara African basins. We operate with world-class HSE standards and strong government partnerships.",
+      "Our E&P division leverages advanced seismic data analysis, modern drilling technologies, and seasoned geological expertise to identify and develop hydrocarbon resources across West African basins. We operate with world-class HSE standards and strong government partnerships.",
     capabilities: [
       "Geophysical surveying and seismic interpretation",
       "Exploration drilling and well management",
@@ -42,7 +44,7 @@ const SERVICES = [
     eyebrow: "Global Commodity Intelligence",
     title: "Trading & Procurement",
     description:
-      "OBMP's trading division executes sophisticated petroleum commodity transactions connecting Sub-Sahara African buyers and sellers to international markets. Our experienced trading desk provides price risk management, supply optimization, and procurement strategies that maximize value.",
+      "OBMP's trading division executes sophisticated petroleum commodity transactions connecting West African buyers and sellers to international markets. Our experienced trading desk provides price risk management, supply optimization, and procurement strategies that maximize value.",
     capabilities: [
       "Crude oil and refined products trading",
       "International supply chain procurement",
@@ -56,6 +58,28 @@ const SERVICES = [
 ];
 
 export default function ServicesDetail() {
+  const [services, setServices] = useState(FALLBACK_SERVICES);
+
+  useEffect(() => {
+    let active = true;
+    fetchServices().then((data) => {
+      if (!active || !data || !data.length) return;
+      setServices(
+        data.map((s, i) => ({
+          n: s.number || String(i + 1).padStart(2, "0"),
+          eyebrow: s.eyebrow,
+          title: s.title,
+          description: s.description,
+          capabilities: s.capabilities || [],
+          image: s.image ? urlFor(s.image)?.width(1200).height(900).fit("crop").url() || "" : "",
+        }))
+      );
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section className="relative bg-abyssal-deep py-24 lg:py-32">
       <div className="container-kinetic">
@@ -65,14 +89,16 @@ export default function ServicesDetail() {
         </div>
 
         <div className="mt-16 space-y-20 lg:space-y-28">
-          {SERVICES.map((s, i) => {
+          {services.map((s, i) => {
             const reverse = i % 2 === 1;
             return (
-              <div key={s.n} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <div key={s.n || i} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                 {/* image */}
                 <div className={reverse ? "lg:order-2" : ""}>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-abyssal-800 ring-1 ring-quartz/10">
-                    <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${s.image})` }} />
+                    {s.image && (
+                      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${s.image})` }} />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-abyssal/70 to-transparent" />
                     <span className="absolute left-5 top-3 font-barlow text-6xl font-extrabold text-gold/25">{s.n}</span>
                   </div>
@@ -80,19 +106,23 @@ export default function ServicesDetail() {
 
                 {/* content */}
                 <div className={reverse ? "lg:order-1" : ""}>
-                  <p className="eyebrow mb-3">{s.eyebrow}</p>
+                  {s.eyebrow && <p className="eyebrow mb-3">{s.eyebrow}</p>}
                   <h3 className="font-heading text-fluid-xl font-bold uppercase leading-tight text-quartz">{s.title}</h3>
-                  <p className="mt-4 text-fluid-base text-quartz/75">{s.description}</p>
+                  {s.description && <p className="mt-4 text-fluid-base text-quartz/75">{s.description}</p>}
 
-                  <p className="eyebrow mb-4 mt-7 text-xs">Key Capabilities</p>
-                  <ul className="grid gap-3 sm:grid-cols-2">
-                    {s.capabilities.map((c) => (
-                      <li key={c} className="flex items-start gap-3 text-fluid-sm text-quartz/80">
-                        <CheckIcon />
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {s.capabilities.length > 0 && (
+                    <>
+                      <p className="eyebrow mb-4 mt-7 text-xs">Key Capabilities</p>
+                      <ul className="grid gap-3 sm:grid-cols-2">
+                        {s.capabilities.map((c) => (
+                          <li key={c} className="flex items-start gap-3 text-fluid-sm text-quartz/80">
+                            <CheckIcon />
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
 
                   <Link to="/contact" className="btn-gold mt-8 hover:shadow-[0_0_20px_rgba(212,157,53,0.45)]">
                     Request a Quote →

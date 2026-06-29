@@ -1,13 +1,28 @@
+import { useEffect, useState } from "react";
+import { fetchSiteSettings } from "../lib/sanity";
+
 /**
  * WhatsAppButton — persistent floating contact button (logo only).
- * Update WHATSAPP_NUMBER (international format, digits only) to change the line.
+ * Number comes from Sanity (siteSettings.whatsapp); falls back to the default.
  */
-const WHATSAPP_NUMBER = "23232888888"; // +232 73 888880
+const FALLBACK_NUMBER = "23232888888"; // +232 32 888888
 
 export default function WhatsAppButton() {
+  const [number, setNumber] = useState(FALLBACK_NUMBER);
+
+  useEffect(() => {
+    let active = true;
+    fetchSiteSettings().then((s) => {
+      if (active && s?.whatsapp) setNumber(String(s.whatsapp).replace(/[^\d]/g, ""));
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <a
-      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+      href={`https://wa.me/${number}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
