@@ -5,8 +5,8 @@ import { useState } from "react";
  * ------------------------------------------
  * Minimalist-industrial fields (transparent, gold focus underline), floating
  * labels, a Service-Interest select that drives a dynamic message hint, and an
- * elegant success state. Pass an `onSubmit(data)` prop to hook real submission;
- * a console-logging mock runs by default (see notes at the bottom of the file).
+ * elegant success state. Submits to Web3Forms by default (set
+ * WEB3FORMS_ACCESS_KEY below); or pass an `onSubmit(data)` prop to override.
  */
 
 const SERVICE_OPTIONS = [
@@ -26,21 +26,41 @@ const SERVICE_HINTS = {
   general: "Tell us how Ocean-Bay can help.",
 };
 
-// Default mock submission — replace by passing your own `onSubmit` prop.
-async function defaultMockSubmit(data) {
-  console.log("[ContactForm] mock submission:", data);
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-  return { ok: true };
+// Web3Forms access key. Create a free one at https://web3forms.com using
+// info@oceanbaypetroleum.com — submissions are emailed there. This key is
+// public-safe (it only routes to your registered email), so it can live here.
+const WEB3FORMS_ACCESS_KEY = "9b293498-727a-4241-b90a-0c82d8a3a96b";
+
+// Sends the form to Web3Forms, which emails it to your inbox.
+async function submitToWeb3Forms(data) {
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_ACCESS_KEY,
+      from_name: "OBMP Website",
+      subject: `New enquiry — ${data.name || "OBMP website"}`,
+      replyto: data.email,
+      ...data,
+    }),
+  });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || "Submission failed");
+  return json;
 }
 
-export default function ContactForm({ onSubmit = defaultMockSubmit }) {
+export default function ContactForm({ onSubmit = submitToWeb3Forms }) {
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [service, setService] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
     setStatus("submitting");
-    const data = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const raw = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const data = {
+      ...raw,
+      service: SERVICE_OPTIONS.find((o) => o.value === raw.service)?.label || raw.service || "Not specified",
+    };
     try {
       await onSubmit(data);
       setStatus("success");
@@ -75,6 +95,8 @@ export default function ContactForm({ onSubmit = defaultMockSubmit }) {
   // ---- form ----
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-7 p-8 lg:p-12">
+      {/* honeypot — hidden from people, catches bots */}
+      <input type="checkbox" name="botcheck" tabIndex={-1} className="hidden" aria-hidden="true" />
       <FloatingInput name="name" label="Full Name" type="text" required />
       <FloatingInput name="email" label="Email Address" type="email" required />
       <FloatingInput name="phone" label="Phone Number" type="tel" />
