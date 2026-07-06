@@ -31,7 +31,7 @@ const FALLBACK_FLEET = [
     type: "Oil Products Tanker",
     flagLine: "Togo flag · IMO 1063322",
     image: "/fleet/crazy.jpg",
-    summary: "A nimble double-hull tanker built for coastal and short-sea distribution across West Africa.",
+    summary: "A nimble double-hull tanker built for coastal and short-sea distribution across Africa.",
     specs: [
       { label: "Deadweight", value: "3,600 MT" },
       { label: "Built", value: "2007" },

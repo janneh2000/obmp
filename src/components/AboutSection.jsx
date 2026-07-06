@@ -7,19 +7,19 @@ import { fetchAbout, fetchValues, urlFor } from "../lib/sanity";
  * Pulls from Sanity (aboutPage + value docs); falls back to the content below.
  */
 const FALLBACK_STORY = {
-  title: "Built on the shores of West Africa",
+  title: "Built on the shores of Africa",
   paragraphs: [
-    "Ocean-Bay Marine & Petroleum Company (OBMP) was founded with a singular vision: to build an indigenous West African petroleum company capable of competing on the world stage while serving the communities at home. Headquartered in Freetown, Sierra Leone 🇸🇱, OBMP has grown from a focused trading house into a fully-integrated petroleum enterprise with plans to serve West Africa as a whole.",
-    "Over the years, we have forged partnerships with international energy majors, national oil companies, and regional governments to deliver fuel, drive exploration, and build energy security across eight West African nations.",
+    "Ocean-Bay Marine & Petroleum Company (OBMP) was founded with a singular vision: to build an indigenous African petroleum company capable of competing on the world stage while serving the communities at home. Headquartered in Freetown, Sierra Leone 🇸🇱, OBMP has grown from a focused trading house into a fully-integrated petroleum enterprise with plans to serve Africa as a whole.",
+    "Over the years, we have forged partnerships with international energy majors, national oil companies, and regional governments to deliver fuel, drive exploration, and build energy security across eight African nations.",
     "Today, OBMP stands as a symbol of African energy ambition — operationally excellent, financially disciplined, and deeply committed to the continent's development.",
   ],
   images: ["/about/story-1.jpg", "/about/story-2.jpg", "/about/story-3.jpg", "/about/story-4.jpg"],
 };
 
 const FALLBACK_MISSION =
-  "To deliver safe, reliable, and competitively priced petroleum products and services that power West Africa's economies — while creating lasting value for our shareholders, employees, and the communities we serve.";
+  "To deliver safe, reliable, and competitively priced petroleum products and services that power Africa's economies — while creating lasting value for our shareholders, employees, and the communities we serve.";
 const FALLBACK_VISION =
-  "To be the most trusted and capable indigenous petroleum company in West Africa — recognized globally for operational excellence, ethical conduct, and our transformative impact on African energy security.";
+  "To be the most trusted and capable indigenous petroleum company in Africa — recognized globally for operational excellence, ethical conduct, and our transformative impact on African energy security.";
 
 const FALLBACK_VALUES = [
   { title: "Integrity", text: "We operate with transparency and honesty in every engagement — with clients, partners, and communities." },

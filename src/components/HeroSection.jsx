@@ -9,12 +9,12 @@ import { fetchSiteSettings, urlFor } from "../lib/sanity";
  * built-in copy as fallback. Parallax + legibility overlays unchanged.
  */
 const FALLBACK = {
-  eyebrow: "Integrated Energy · West Africa",
+  eyebrow: "Integrated Energy · Africa",
   line1: "Powering",
-  line2: "West Africa's",
+  line2: "Africa's",
   line3: "Energy Future",
   subcopy:
-    "An integrated platform for the sustainable exploration, distribution, and supply of premium petroleum products across West Africa.",
+    "An integrated platform for the sustainable exploration, distribution, and supply of premium petroleum products across Africa.",
   image: "/hero.jpg",
 };
 

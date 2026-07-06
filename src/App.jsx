@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Fleet from "./pages/Fleet";
 import Contact from "./pages/Contact";
+import { Analytics } from "@vercel/analytics/next"
 
 /** Scroll to top on every route change. */
 function ScrollToTop() {
