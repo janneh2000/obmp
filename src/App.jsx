@@ -6,7 +6,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Fleet from "./pages/Fleet";
 import Contact from "./pages/Contact";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react";
 
 /** Scroll to top on every route change. */
 function ScrollToTop() {
@@ -32,6 +32,7 @@ export default function App() {
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
