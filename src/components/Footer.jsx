@@ -24,7 +24,7 @@ export default function Footer() {
           </div>
           <p className="mt-5 max-w-sm text-fluid-sm text-quartz/55">
             An integrated energy platform for the sustainable exploration, distribution, and
-            supply of premium petroleum products across Sub-SaharaAfrica.
+            supply of premium petroleum products across Sub-Sahara Africa.
           </p>
         </div>
 
