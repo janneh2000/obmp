@@ -45,8 +45,8 @@ export default function Footer() {
           <ul className="space-y-3 text-fluid-sm text-quartz/70">
             <li>Freetown, Sierra Leone</li>
             <li>
-              <a href="mailto:info@oceanbaypetroleum.com" className="transition-colors hover:text-gold">
-                info@oceanbaypetroleum.com
+              <a href="mailto:oceanbaypetroleum.sl@gmail.com" className="transition-colors hover:text-gold">
+                oceanbaypetroleum.sl@gmail.com
               </a>
             </li>
             <li>

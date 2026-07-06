@@ -35,7 +35,7 @@ const ClockIcon = () => (
 const FALLBACK = {
   headOffice: ["Freetown, Sierra Leone 🇸🇱", "Sub-Sahara Africa"],
   phone: ["+23232888888"],
-  emails: ["info@oceanbaypetroleum.com", "sales@oceanbaypetroleum.com"],
+  emails: ["oceanbaypetroleum.sl@gmail.com"],
   hours: ["Monday – Friday: 8AM – 6PM", "Saturday: 9AM – 2PM"],
 };
 
