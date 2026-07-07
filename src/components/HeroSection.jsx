@@ -11,7 +11,7 @@ import { fetchSiteSettings, urlFor } from "../lib/sanity";
 const FALLBACK = {
   eyebrow: "Integrated Energy · Africa",
   line1: "Powering",
-  line2: "Africa's",
+  line2: "Africa",
   line3: "Energy Future",
   subcopy:
     "An integrated platform for the sustainable exploration, distribution, and supply of premium petroleum products across Africa.",
